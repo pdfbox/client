@@ -93,6 +93,8 @@ Vue.component('login-page', ({
                     console.log(data);
                     
                     localStorage.setItem('access_token', data.access_token)
+                    localStorage.setItem('id', data.id)
+                    
                     this.$emit('success-login')
                 })
                 .catch(({response})=> {

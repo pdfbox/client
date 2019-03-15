@@ -22,20 +22,23 @@ Vue.component('file-upload', {
         axios
           .post('http://localhost:3000/google-upload/', formData, {
             headers: {
-              'Content-Type': 'multipart/form-data'
+              'Content-Type': 'multipart/form-data',
+              access_token : localStorage.access_token
             }
           })
           .then(({data})=> {
             swal('upload success');
             $('#viewer').attr('src',"");
             document.getElementById("file").value = null;
-            this.$parent.listdata.push(data)
+            this.$parent.listdata.unshift(data)
+            this.$parent.userPdf.unshift(data)
           })
           .catch(function (err) {
             console.log(err);
           });
       },
       previewImage() {
+        $('#viewer').attr('src',"");
         pdffile=document.getElementById("file").files[0];
         pdffile_url=URL.createObjectURL(pdffile);
         $('#viewer').attr('src',pdffile_url);

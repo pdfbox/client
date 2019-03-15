@@ -29,17 +29,18 @@
 
 <body>
     <div id="app">
-        <login-page
-            v-if="isLogin == false"
-            @success-login="successLogin">
-        </login-page>
-        <file-upload-google-page
-            v-if="isLogin == true">
-        </file-upload-google-page>
-        
+        <div>
+            <login-page v-if="isLogin == false" @success-login="successLogin">
+            </login-page>
+            <file-upload>
+            </file-upload>
+            <home-page v-if="isLogin == true">
+            </home-page>
+        </div>
 
     </div>
-    <script src="./components/file-upload-google-page.js"></script>
+    <script src="./components/file-upload.js"></script>
+    <script src="./components/home-page.js"></script>
     <script src="./components/login.js"></script>
     <script src="index.js"></script>
 </body>
