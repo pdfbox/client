@@ -25,11 +25,14 @@ Vue.component('file-upload', {
               'Content-Type': 'multipart/form-data'
             }
           })
-          .then(function ({data}) {
-            
+          .then(({data})=> {
+            swal('upload success');
+            $('#viewer').attr('src',"");
+            document.getElementById("file").value = null;
+            this.$parent.listdata.push(data)
           })
           .catch(function (err) {
-            console.log(err.response.data.message);
+            console.log(err);
           });
       },
       previewImage() {
