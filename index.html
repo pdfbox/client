@@ -32,14 +32,15 @@
         <login-page
             v-if="isLogin == false"
             @success-login="successLogin">
-            
-            <file-upload-google-page></file-upload-google-page>
         </login-page>
+        <file-upload-google-page
+            v-if="isLogin == true">
+        </file-upload-google-page>
         
 
     </div>
+    <script src="./components/file-upload-google-page.js"></script>
     <script src="./components/login.js"></script>
-    <script src="./components//file-upload-google-page.js"></script>
     <script src="index.js"></script>
 </body>
 

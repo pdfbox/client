@@ -19,7 +19,7 @@ Vue.component('file-upload-google-page', {
           <a href="https://plus.google.com/share?url=https%3A//storage.googleapis.com/pdfbox.cloudeyeglobal.com/1552620972312Test.pdf">Google+</a>
           </div>    
         </div>
-        <a class="col-2 py-3 btn btn-primary text-light">
+        <a href="#" class="col-2 py-3 btn btn-primary text-light" @click.prevent="translateFile(item.url)">
           Translate     
         </a>
       </div>
@@ -30,7 +30,7 @@ Vue.component('file-upload-google-page', {
   mounted() {
     axios
       .get('http://localhost:3000/google-upload/')
-      .then(({data}) => {
+      .then(({ data }) => {
         this.listdata = data;
       })
       .catch((err) => {
@@ -40,7 +40,7 @@ Vue.component('file-upload-google-page', {
   data: function () {
     return {
       listdata: [],
-      translated : ''
+      translated: ''
     }
   },
 
@@ -52,17 +52,17 @@ Vue.component('file-upload-google-page', {
     submitFile() {
 
       console.log('masuk sini');
-      
+
       var formData = new FormData();
       var dataFile = document.querySelector('#file');
       formData.append("file", dataFile.files[0]);
       axios
-        .post('http://localhost:3000/google-upload/translate', formData, {
+        .post('http://localhost:3000/google-upload/', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         })
-        .then(({data})=> {
+        .then(({ data }) => {
           console.log(data);
           this.translated = data.data
           // this.listdata.push(data)
@@ -72,5 +72,21 @@ Vue.component('file-upload-google-page', {
           console.log(err);
         });
     },
+
+    translateFile(url) {
+      console.log(url,"===");
+      
+      axios
+        .post('http://localhost:3000/google-upload/translate', { url
+        })
+        .then(({ data }) => {
+          console.log(data);
+          this.translated = data.data
+        })
+        .catch(function (err) {
+          swal('we are so sorry our server is busy')
+          console.log(err);
+        });
+    }
   }
 });
