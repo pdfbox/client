@@ -1,16 +1,8 @@
 Vue.component('home-page', {
   template: `
 <div class="container">
-  <div class="row justify-content-center py-5" style="align-items: center;">
-    <form id="uploadForm" enctype="multipart/form-data" @submit.prevent="submitFile">
-        <div class="input-group">
-          <input type="file" id="" name="file">
-          <button type="submit">Simpan</button>
-        </div>
-    </form>
-   </div> 
-   <div v-if="listdata && listdata.length">
-      <div class="row mt-3" v-for="item in listdata">
+   <div v-if="$parent.listdata && $parent.listdata.length">
+      <div class="row mt-3" v-for="item in $parent.listdata">
         <div class="col-12 px-3 py-1 border" style="color: #000;">
           <a :href="item.url" target="_blank"><div class="py-3" style="color: #000;">{{item.url}}</div></a>     
           <div class="mb-3">
@@ -27,23 +19,6 @@ Vue.component('home-page', {
 </div>
 </div>
   `,
-  mounted() {
-    axios
-      .get('http://localhost:3000/google-upload/')
-      .then(({data}) => {
-        console.log(data)
-        this.listdata = data;
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  },
-  data: function () {
-    return {
-      listdata: []
-    }
-  },
-
   methods: {
     shareFacebookUrl(item) {
       return `https://www.facebook.com/sharer/sharer.php?u=${item.url}`
@@ -61,22 +36,6 @@ Vue.component('home-page', {
       url = url.split('/');
       return url[url.length - 1]
     },
-    submitFile() {
-      var formData = new FormData();
-      var dataFile = document.querySelector('#file');
-      formData.append("file", dataFile.files[0]);
-      axios
-        .post('http://localhost:3000/google-upload/', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })
-        .then(({data}) => {
-          this.listdata.push(data)
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
-    },
+
   }
 });
