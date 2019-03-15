@@ -1,10 +1,15 @@
-
+// const baseURL =`http://pdfbox-server.cloudeyeglobal.com`;
+const baseURL =`http://localhost:3000`;
 let app = new Vue({
     el : `#app`,
     data : {
         isLogin : false,
-        listdata : [],
-        userPdf : []
+        listData : [],
+        userPdf : [],
+        modalData: '',
+        showHomepage: true,
+        showUploadpage: false,
+        isLoadingModal:false
 
     },
     created () {
@@ -19,19 +24,18 @@ let app = new Vue({
     methods : {
         getMyPdf() {
             let userId = localStorage.getItem('id')
-            let myData = this.listdata.filter(e => {
+            let myData = this.listData.filter(e => {
                 return e.author == userId
             })
             this.userPdf = myData
         },
         getPdfList() {
             axios
-            .get('http://localhost:3000/google-upload/', {headers : {access_token : localStorage.access_token}})
+            .get(`${baseURL}/google-upload/`, {headers : {access_token : localStorage.access_token}})
             .then(({ data }) => {
               console.log(data);
-              this.listdata = data
+              this.listData = data
               this.getMyPdf()
-              // this.listdata.push(data)
             })
             .catch(function (err) {
     
@@ -42,7 +46,7 @@ let app = new Vue({
 
 
         successLogin() {
-            this.isLogin = true
+            this.isLogin = true;
             this.getPdfList()
         },
         cekLoginUSer() {
@@ -51,4 +55,4 @@ let app = new Vue({
             }
         }
     }
-})
+});

@@ -1,6 +1,3 @@
-
-const urlLink = 'http://localhost:3000'
-
 Vue.component('login-page', ({
     template: `
     <div class="container">
@@ -50,7 +47,7 @@ Vue.component('login-page', ({
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Name</label>
-                                <input type="password" class="form-control"  placeholder="Name"
+                                <input type="text" class="form-control"  placeholder="Name"
                                 v-model="name">
                             </div>
                             <div class="form-group">
@@ -78,7 +75,7 @@ Vue.component('login-page', ({
     methods : {
         register() {
             axios
-                .post(`${urlLink}/register`, {email : this.email, password : this.password, name : this.name})
+                .post(`${baseURL}/register`, {email : this.email, password : this.password, name : this.name})
                 .then(({data})=> {
                     swal('register success')
                 })
@@ -88,7 +85,7 @@ Vue.component('login-page', ({
         },
         loginForm() {
             axios
-                .post(`${urlLink}/login`, {email : this.email, password : this.password})
+                .post(`${baseURL}/login`, {email : this.email, password : this.password})
                 .then(({data})=> {
                     console.log(data);
                     
